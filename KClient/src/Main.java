@@ -113,7 +113,7 @@ public class Main {
     }
 
     private void printHelp() {
-        System.out.println(Strings.HELP);
+        System.out.println("Use '/list' to see list of all online people, Use '/msg <username>' to send a private message, Use '/group help' for all group commands.)");
     }
 
     private void sendWelcome() throws IOException, NoSuchAlgorithmException {
