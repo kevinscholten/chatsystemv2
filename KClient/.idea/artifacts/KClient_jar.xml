@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="KClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KClient_jar</output-path>
+    <root id="archive" name="KClient.jar">
+      <element id="module-output" name="KClient" />
+    </root>
+  </artifact>
+</component>
