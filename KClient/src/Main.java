@@ -80,7 +80,7 @@ public class Main {
         }catch (ConnectException ce) {
             System.err.println("Can't connect to the server..");
         }
-        System.out.println("QUIT CHAT CLIENT. RESTART CLIENT TO RECONNECT...");
+        System.err.println("Client disconnected...");
     }
 
     private void sendPrivateMessage(String s) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
@@ -89,7 +89,7 @@ public class Main {
     }
 
     private void sendGroupCommand(String message) {
-        sendMessageToServer("GRPP "+message);
+        sendMessageToServer("GROUP "+message);
     }
 
     private void quitServer() {
@@ -147,6 +147,6 @@ public class Main {
             KeyPair keyPair = gen.generateKeyPair();
             dataProvider.PUBLIC_KEY = keyPair.getPublic();
             dataProvider.PRIVATE_KEY = keyPair.getPrivate();
-            sendMessageToServer("PUBKEY "+ Arrays.toString(Base64.getEncoder().encode(dataProvider.PUBLIC_KEY.getEncoded())));
+            sendMessageToServer("PUBKY "+ Arrays.toString(Base64.getEncoder().encode(dataProvider.PUBLIC_KEY.getEncoded())));
     }
 }

@@ -28,10 +28,13 @@ public class ServerMessage implements Runnable {
                     case "OLIST":
                         System.out.println(response);break;
                     case "PING":
-                        Main.sendMessageToServer("PONG");
-                        break;
+                        Main.sendMessageToServer("PONG");break;
                     case "PMSG":
                         decryptMessage(response);break;
+                    case "+OK":
+                        System.out.println(response);break;
+                    case "-ERR":
+                        System.out.println(response);break;
                     default:
                         System.out.println(line);break;
                 }

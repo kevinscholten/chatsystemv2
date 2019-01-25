@@ -40,7 +40,7 @@ public class Server {
     }
 
     public static void sendOnlineUsers(Client client) {
-        String s = "OLIST Online users: ";
+        String s = "+OK Online users: ";
         for (int i = 0; i < clients.size(); i++) {
             if (i==(clients.size()-1)) {
                 s+=clients.get(i).getUsername();
@@ -69,9 +69,9 @@ public class Server {
     public static void disconnectClient(Client client) {
         for (Client c : clients)
             if (c==client) {
-                client.running = false;
+                c.running = false;
 //                client.idler.interrupt();
-                clients.remove(client);
+                clients.remove(c);
                 break;
             }
         printToServerConsole("[-] "+client.getUsername() + " disconnected.");
@@ -147,7 +147,7 @@ public class Server {
     }
 
     public static void sendGroupInfo(Client client, Group currentGroup) {
-        String s = "CURRENT GROUP: "+currentGroup.groupName.toUpperCase()+" - "+currentGroup.members.size()+" Members - Owner: "+currentGroup.owner.getUsername()+"" +
+        String s = "+OK CURRENT GROUP: "+currentGroup.groupName.toUpperCase()+" - "+currentGroup.members.size()+" Members - Owner: "+currentGroup.owner.getUsername()+"" +
                 " - Member(s): ";
         for (Client c : currentGroup.members) {
             s+=c.getUsername()+", ";
@@ -156,7 +156,7 @@ public class Server {
     }
 
     public static void sendGroupList(Client client) {
-        String s = "ALL GROUPS: ";
+        String s = "+OK ALL GROUPS: ";
         for (Group c : groups) {
             s+=c.groupName+" ("+c.members.size()+" members), ";
         }
@@ -180,13 +180,22 @@ public class Server {
 
         if (cutted.length > 1) {
             if (doesUsernameExists(receiver.getUsername())) {
-                receiver.sendMessage("PMSG "+sender.getUsername()+" "+message);
-                sender.sendMessage("PRIVATE MSG to "+receiver.getUsername()+": "+message);
-            } else sender.sendMessage("Error: User specified is not found.");
+                if (!receiver.getUsername().equals(sender.getUsername())) {
+                    receiver.sendMessage("PMSG "+sender.getUsername()+" "+message);
+                    sender.sendMessage("+OK PRIVATE MSG sent to "+receiver.getUsername()+": "+message);
+                } else sender.sendMessage(Strings.getErrorString(20));
+            } else sender.sendMessage(Strings.getErrorString(2));
         } else {
-            sender.sendMessage("Error: Please use /msg <username> <message>");
+            sender.sendMessage(Strings.getErrorString(1));
         }
 
 
+    }
+
+    public static boolean doesGroupNameExists(String s) {
+        for (Group g : groups) {
+            if (g.groupName.equals(s)){ return true;}
+        }
+        return false;
     }
 }
